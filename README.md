@@ -7,12 +7,40 @@ Docker base image for Lapis, see https://hub.docker.com/r/lapytopy/lapis/, based
 The repository is a simple image with [OpenResty](https://openresty.org/en/) and [Lapis Framework](http://leafo.net/lapis/).
 
 ## What's different from origin repository
+- arm64 Images *(most important)*
 - Updated lapis and luarocks
-- Doesn't remove build deps, to prevent some rocks failing to install.
+- Doesn't remove build deps, to prevent some rocks failing to install
 
 ## Usage for GitHub Container Registry
 
 See [GitHub Container Registry](https://github.com/users/MilesChou/packages/container/package/lapis)
+
+### For development
+#### Create a basic application with moonscript
+
+```bash
+docker run \
+  -w /app \
+  --mount type=bind,source="$(pwd)"/src,target=/app \
+  --rm -it lapytopy/lapis:latest lapis new --moonscript
+```
+
+#### Run directly from lapis image
+
+```bash
+docker run \
+  -w /app \
+  -p 8080 \
+  --mount type=bind,source="$(pwd)"/src,target=/app \
+  --rm -it lapytopy/lapis:latest /bin/bash -c "moonc . && lapis server"
+```
+
+> **Note**
+> You can pin your dependencies by running following commands, for prevent dependency corruption:
+> `luarocks build --only-deps` 
+
+> **Warning**
+> If you can't access to the service while running, try changing port number to another.
 
 ## Supported tags and respective `Dockerfile` links
 

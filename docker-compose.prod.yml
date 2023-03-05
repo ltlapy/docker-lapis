@@ -1,0 +1,20 @@
+version: "3"
+services:
+    app:
+        image: lapytopy/lapis
+        container_name: app
+        restart: unless-stopped
+        env_file: .env
+        build:
+            # build the image for production
+            context: .
+            dockerfile: Dockerfile.prod
+        volumes:
+            - ./src:/app
+            - ./logs:/var/log/openresty/
+            - openresty_tmp:/tmp/openresty
+        ports:
+            - 8080
+
+volumes:
+    openresty_tmp:

@@ -1,0 +1,22 @@
+FROM lapytopy/lapis
+
+EXPOSE 8080
+
+# Copy sources
+RUN mkdir -p /app
+WORKDIR /app
+
+COPY src .
+
+# Install luarocks dependency
+# Tip: Make dependency files by running `./run.sh luarocks build --only-deps`
+RUN luarocks install
+RUN moonc .
+
+# Cleanup
+# RUN apt-get remove --purge -y && \
+#     apt-get autoremove --purge -y && \
+#     rm -r /var/lib/apt/lists/*
+RUN find . -name "*.moon" -type f -delete
+
+ENTRYPOINT [ "lapis", "server" ]

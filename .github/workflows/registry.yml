@@ -34,7 +34,7 @@ jobs:
             type=semver,pattern={{major}}
       
       - name: Build Debian version and publish to GitHub Registry
-        uses: elgohr/Publish-Docker-Github-Action@2.22
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: ltlapy/lapis
           tags: "latest,debian"

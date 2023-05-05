@@ -39,7 +39,7 @@ ENV BUILD_DEPS \
         unzip \
         wget
 
-COPY docker-* /usr/local/bin
+COPY docker-luarocks-install /usr/local/bin/
 
 # Install depandency packages
 RUN set -xe && \

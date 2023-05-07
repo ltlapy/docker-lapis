@@ -22,7 +22,8 @@ See [GitHub Container Registry](https://github.com/users/MilesChou/packages/cont
 docker run \
   -w /app \
   --mount type=bind,source="$(pwd)"/src,target=/app \
-  --rm -it lapytopy/lapis:latest lapis new --moonscript
+  --rm -it ghcr.io/ltlapy/docker-lapis:debian \
+  lapis new --moonscript
 ```
 
 #### Run directly from lapis image
@@ -32,7 +33,8 @@ docker run \
   -w /app \
   -p 8080 \
   --mount type=bind,source="$(pwd)"/src,target=/app \
-  --rm -it lapytopy/lapis:latest /bin/bash -c "moonc . && lapis server"
+  --rm -it lapytopy/lapis:latest \
+  /bin/bash -c "moonc . && lapis server"
 ```
 
 > **Note**

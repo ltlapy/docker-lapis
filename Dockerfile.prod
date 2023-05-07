@@ -19,4 +19,4 @@ RUN moonc .
 #     rm -r /var/lib/apt/lists/*
 RUN find . -name "*.moon" -type f -delete
 
-ENTRYPOINT [ "lapis", "server" ]
+CMD [ "lapis", "server" ]

@@ -84,4 +84,4 @@ RUN docker-luarocks-install lapis ${LAPIS_VERSION} && \
 
 RUN mkdir /app
 WORKDIR /app
-ENTRYPOINT [ "lapis", "server" ]
+CMD [ "lapis", "server" ]

@@ -29,13 +29,13 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}
           tags: |
-            type=edge,suffix=amd64
-            type=ref,event=pr,suffix=amd64
-            type=ref,event=branch,suffix=amd64
-            type=semver,pattern={{version}},suffix=amd64
-            type=semver,pattern={{major}}.{{minor}},suffix=amd64
-            type=semver,pattern={{major}},suffix=amd64
-            type=raw,value=amd64
+            type=edge,suffix=_amd64
+            type=ref,event=pr,suffix=_amd64
+            type=ref,event=branch,suffix=_amd64
+            type=semver,pattern={{version}},suffix=_amd64
+            type=semver,pattern={{major}}.{{minor}},suffix=_amd64
+            type=semver,pattern={{major}},suffix=_amd64
+            type=raw,value=amd64,enable=${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
 
       - name: Log in to Container registry
         uses: docker/login-action@v2
@@ -75,13 +75,13 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}
           tags: |
-            type=edge,suffix=amd64
-            type=ref,event=pr,suffix=amd64
-            type=ref,event=branch,suffix=amd64
-            type=semver,pattern={{version}},suffix=amd64
-            type=semver,pattern={{major}}.{{minor}},suffix=amd64
-            type=semver,pattern={{major}},suffix=amd64
-            type=raw,value=arm64
+            type=edge,suffix=_arm64
+            type=ref,event=pr,suffix=_arm64
+            type=ref,event=branch,suffix=_arm64
+            type=semver,pattern={{version}},suffix=_arm64
+            type=semver,pattern={{major}}.{{minor}},suffix=_arm64
+            type=semver,pattern={{major}},suffix=_arm64
+            type=raw,value=arm64,enable=${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
 
       - name: Log in to Container registry
         uses: docker/login-action@v2

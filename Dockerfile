@@ -19,6 +19,7 @@ ARG OPENRESTY_CONFIG_OPTIONS="\
     --with-stream \
     --with-stream_ssl_module \
     --with-threads \
+    --with-luajit-xcflags='-DLUAJIT_ENABLE_GC64' \
     "
 
 # Set environment

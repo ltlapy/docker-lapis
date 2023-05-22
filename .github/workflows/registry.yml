@@ -31,7 +31,7 @@ jobs:
           tags: |
             type=edge,suffix=_amd64
             type=ref,event=pr,suffix=_amd64
-            type=ref,event=branch,suffix=_amd64
+            type=ref,event=branch,suffix=_amd64,enable=${{ github.ref != format('refs/heads/{0}', github.event.repository.default_branch) }}
             type=semver,pattern={{version}},suffix=_amd64
             type=semver,pattern={{major}}.{{minor}},suffix=_amd64
             type=semver,pattern={{major}},suffix=_amd64
@@ -77,7 +77,7 @@ jobs:
           tags: |
             type=edge,suffix=_arm64
             type=ref,event=pr,suffix=_arm64
-            type=ref,event=branch,suffix=_arm64
+            type=ref,event=branch,suffix=_arm64,enable=${{ github.ref != format('refs/heads/{0}', github.event.repository.default_branch) }}
             type=semver,pattern={{version}},suffix=_arm64
             type=semver,pattern={{major}}.{{minor}},suffix=_arm64
             type=semver,pattern={{major}},suffix=_arm64

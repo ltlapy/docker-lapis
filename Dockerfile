@@ -29,6 +29,8 @@ ENV OPENRESTY_VERSION=1.21.4.1 \
     LAPIS_VERSION=1.12.0-1
 ENV PATH=${OPENRESTY_PREFIX}/bin:${OPENRESTY_PREFIX}/nginx/sbin:${PATH}
 
+ENV LUAROCKS_BUILTIN_LIBRARY="luasec,luasocket,lua-resty-openssl,luaossl,lua-cjson,cqueues,lsqlite3,pgmoon,lua-resty-mysql,busted"
+
 LABEL OPENRESTY_VERSION=$OPENRESTY_VERSION \
     LUAROCKS_VERSION=$LUAROCKS_VERSION \
     LAPIS_VERSION=$LAPIS_VERSION
@@ -38,9 +40,9 @@ ENV BUILD_DEPS \
         build-essential \
         git-core \
         unzip \
-        wget
-
-COPY docker-luarocks-install /usr/local/bin/
+        wget \
+        m4 \
+        libsqlite3-dev
 
 # Install depandency packages
 RUN set -xe && \
@@ -75,13 +77,21 @@ RUN wget https://luarocks.org/releases/luarocks-${LUAROCKS_VERSION}.tar.gz && \
     make -j $(getconf _NPROCESSORS_ONLN) build && make install && \
     cd / && rm -rf luarocks-${LUAROCKS_VERSION}
 
+
+
 # Install Lapis
-RUN docker-luarocks-install lapis ${LAPIS_VERSION} && \
+COPY docker-luarocks-install /usr/local/bin/
+RUN docker-luarocks-install lapis $LAPIS_VERSION && \
     docker-luarocks-install moonscript && \
     # Remove build deps
     # apt-get remove --purge -y ${BUILD_DEPS} && apt-get autoremove --purge -y && rm -r /var/lib/apt/lists/* && \
     # Test
     lapis -h
+
+# Install essential libraries
+COPY docker-luarocks-batch-install /usr/local/bin/
+RUN docker-luarocks-batch-install ${LUAROCKS_BUILTIN_LIBRARY}
+
 
 RUN mkdir /app
 WORKDIR /app
